@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import egg.web.libreria.entidades.*;
 
 @Repository
-public interface LibroRepositorio extends JpaRepository<Libro, String>{
+public interface LibroRepositorio extends JpaRepository<Libro, Integer>{
 
 	@Query("SELECT l FROM Libro l")
 	public List<Libro> listarLibros();
@@ -40,7 +40,7 @@ public interface LibroRepositorio extends JpaRepository<Libro, String>{
 	public void altabaja(@Param("alta") boolean alta);
 	
 	@Query("DELETE Libro l WHERE l.id =:id")
-	public void eliminarLibro(@Param("id") String id);
+	public void eliminarLibro(@Param("id") Integer id);
 	
 	
 }

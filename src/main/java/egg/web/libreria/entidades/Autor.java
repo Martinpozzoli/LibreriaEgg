@@ -2,15 +2,13 @@ package egg.web.libreria.entidades;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
 @Table(name="autor")
 public class Autor {
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
+	@Column(name="autor_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	private String nombre;
 	private boolean alta;
 	
@@ -25,11 +23,11 @@ public class Autor {
 		this.alta = alta;
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	

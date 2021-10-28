@@ -24,7 +24,7 @@ public class EditorialServicio {
 		editorialRepo.save(editorial);
 	}
 	
-	public void modificareditorial(String id, String nombre, boolean alta) throws ErrorServicio{
+	public void modificareditorial(Integer id, String nombre, boolean alta) throws ErrorServicio{
 		
 		validar(nombre);
 		
@@ -39,7 +39,7 @@ public class EditorialServicio {
 		editorialRepo.save(editorial);
 	}
 	
-	public void darAltaBajaeditorial(String id)  throws ErrorServicio{
+	public void darAltaBajaeditorial(Integer id)  throws ErrorServicio{
 		
 		if(!editorialRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el editorial con id = " + id);
@@ -52,7 +52,7 @@ public class EditorialServicio {
 		}
 	}
 	
-	public void quitareditorial(String id) throws ErrorServicio{
+	public void quitareditorial(Integer id) throws ErrorServicio{
 		
 		if(!editorialRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el editorial con id = " + id);

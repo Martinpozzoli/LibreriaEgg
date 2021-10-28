@@ -10,7 +10,7 @@ import egg.web.libreria.errores.ErrorServicio;
 import egg.web.libreria.repositorios.AutorRepositorio;
 
 @Service
-public class AutorServicio {
+public class AutorServicio{
 
 	@Autowired
 	private AutorRepositorio autorRepo;
@@ -26,7 +26,7 @@ public class AutorServicio {
 		autorRepo.save(autor);
 	}
 	
-	public void modificarAutor(String id, String nombre, boolean alta) throws ErrorServicio{
+	public void modificarAutor(Integer id, String nombre, boolean alta) throws ErrorServicio{
 		
 		validar(nombre);
 		
@@ -41,7 +41,7 @@ public class AutorServicio {
 		autorRepo.save(autor);
 	}
 	
-	public void darAltaBajaAutor(String id)  throws ErrorServicio{
+	public void darAltaBajaAutor(Integer id)  throws ErrorServicio{
 		
 		if(!autorRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el autor con id = " + id);
@@ -54,7 +54,7 @@ public class AutorServicio {
 		}
 	}
 	
-	public void quitarAutor(String id) throws ErrorServicio{
+	public void quitarAutor(Integer id) throws ErrorServicio{
 		
 		if(!autorRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el autor con id = " + id);

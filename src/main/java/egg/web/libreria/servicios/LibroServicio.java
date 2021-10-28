@@ -20,7 +20,7 @@ public class LibroServicio {
 	private EditorialRepositorio editorialRepo;
 
 	public void crearLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, String autorId, String editorialId) throws ErrorServicio{
+			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio{
 		
 		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
 				ejemplaresRestantes, autorId, editorialId);
@@ -40,8 +40,8 @@ public class LibroServicio {
 	}
 	
 	
-	public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, String autorId, String editorialId) throws ErrorServicio {
+	public void modificarLibro(Integer id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio {
 		
 		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
 				ejemplaresRestantes, autorId, editorialId);
@@ -66,7 +66,7 @@ public class LibroServicio {
 		
 	}
 	
-	public void darAltaBajaLibro(String id) throws ErrorServicio{
+	public void darAltaBajaLibro(Integer id) throws ErrorServicio{
 			if(!libroRepo.findById(id).isPresent()) {
 				throw new ErrorServicio("No se encontró el libro con id = " + id);
 			}
@@ -77,7 +77,7 @@ public class LibroServicio {
 		}
 	}
 	
-	public void quitarLibro(String id) throws ErrorServicio{
+	public void quitarLibro(Integer id) throws ErrorServicio{
 		if(!libroRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el libro con id = " + id);
 		}
@@ -85,7 +85,7 @@ public class LibroServicio {
 	}
 	
 	private void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, String autorId, String editorialId) throws ErrorServicio{
+			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio{
 		
 		if (isbn == null || isbn.toString().isEmpty()) {
 			throw new ErrorServicio("isbn sin especificar");
@@ -111,11 +111,11 @@ public class LibroServicio {
 			throw new ErrorServicio("N° de ejemplares restantes sin especificar");
 		}
 		
-		if (autorId == null || autorId.isEmpty()) {
+		if (autorId == null || autorId.toString().isEmpty()) {
 			throw new ErrorServicio("autorID sin especificar");
 		}
 		
-		if (editorialId == null || editorialId.isEmpty()) {
+		if (editorialId == null || editorialId.toString().isEmpty()) {
 			throw new ErrorServicio("editorialId sin especificar");
 		}
 	}
