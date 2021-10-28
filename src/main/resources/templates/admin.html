@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIN</title>
+
+<!-- CSS only -->
+<link href="css/bootstrap.min.css" rel="stylesheet" th:ref="@{/css/bootstrap.css}">
+
+</head>
+<body class="text-center">
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/"><strong>LaLibreria</strong></a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+					aria-controls="navbarCollapse" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/">Inicio</a></li>
+						<li class="nav-item"><a class="nav-link active" href="/login">Login</a>
+						</li>
+						<li class="nav-item"><a class="nav-link active"
+							href="/registro">Registrarme</a></li>
+						<li class="nav-item"><a class="nav-link active" href="/admin">Administrar
+								BD</a></li>
+					</ul>
+					<form class="d-flex">
+						<input class="form-control me-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<br>
+	<br>
+	<br>
+	<div th:switch="${list}">
+	<div th:case="*">
+	<table class="table table-dark table-striped">
+		<thead>
+			<TR>
+				<TH COLSPAN="4"><BR>
+				<H3>AUTORES</H3></TH>
+			</TR>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Dar de baja/alta</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="autor : ${list}">
+				<td th:text="${autor.nombre}">
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	</div>
+	<br>
+	<div>
+	<table class="table table-dark table-striped">
+		<thead>
+			<TR>
+				<TH COLSPAN="4"><BR>
+				<H3>EDITORIALES</H3></TH>
+			</TR>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Dar de baja/alta</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@mdo</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<br>
+	<div>
+	<table class="table table-dark table-striped">
+		<thead>
+			<TR>
+				<TH COLSPAN="4"><BR>
+				<H3>LIBROS</H3></TH>
+			</TR>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Titulo</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Dar de baja/alta</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@mdo</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+	<!-- JavaScript Bundle with Popper -->
+	<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
