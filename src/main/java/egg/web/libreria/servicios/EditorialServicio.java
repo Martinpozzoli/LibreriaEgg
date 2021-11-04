@@ -1,5 +1,7 @@
 package egg.web.libreria.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class EditorialServicio {
 	@Autowired
 	private EditorialRepositorio editorialRepo;
 	
-	public void creareditorial(String nombre, boolean alta) throws ErrorServicio{
+	public void crearEditorial(String nombre, boolean alta) throws ErrorServicio{
 		
 		validar(nombre);
 		
@@ -60,6 +62,10 @@ public class EditorialServicio {
 		editorialRepo.eliminarEditorial(id);
 	}
 	
+public List<Editorial> mostrarEditoriales() throws ErrorServicio{
+		
+		return editorialRepo.listarEditoriales();
+	}
 	
 	private void validar(String nombre) throws ErrorServicio{
 		

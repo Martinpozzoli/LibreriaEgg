@@ -1,5 +1,7 @@
 package egg.web.libreria.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +84,11 @@ public class LibroServicio {
 			throw new ErrorServicio("No se encontró el libro con id = " + id);
 		}
 		libroRepo.eliminarLibro(id);
+	}
+	
+	public List<Libro> mostrarLibros() throws ErrorServicio{
+		
+		return libroRepo.listarLibros();
 	}
 	
 	private void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,

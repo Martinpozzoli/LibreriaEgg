@@ -7,7 +7,8 @@
 <title>ADMIN</title>
 
 <!-- CSS only -->
-<link href="css/bootstrap.min.css" rel="stylesheet" th:ref="@{/css/bootstrap.css}">
+<link href="css/bootstrap.min.css" rel="stylesheet"
+	th:ref="@{/css/bootstrap.css}">
 
 </head>
 <body class="text-center">
@@ -44,80 +45,162 @@
 	<br>
 	<br>
 	<br>
-	<div th:switch="${list}">
-	<div th:case="*">
-	<table class="table table-dark table-striped">
-		<thead>
-			<TR>
-				<TH COLSPAN="4"><BR>
-				<H3>AUTORES</H3></TH>
-			</TR>
-			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Nombre</th>
-				<th scope="col">Editar</th>
-				<th scope="col">Dar de baja/alta</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="autor : ${list}">
-				<td th:text="${autor.nombre}">
-			</tr>
-		</tbody>
-	</table>
-	</div>
+	<div>
+		<div>
+			<table class="table table-dark table-striped">
+				<thead>
+					<TR>
+						<TH COLSPAN="4"><BR>
+							<H3>AUTORES</H3></TH>
+					</TR>
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Dar de baja/alta</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="autor : ${autores}">
+						<td th:text="${autor.id}"></td>
+						<td th:text="${autor.nombre}"></td>
+						<td><button type="button" class="btn btn-primary">Editar</button></td>
+						<td th:switch="${autor.alta}">
+							<button th:case="true" type="button" class="btn btn-success">Dar de alta</button>
+							<button th:case="false" type="button" class="btn btn-danger">Dar de baja</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div>
+				<button type="button" class="btn btn-dark" onclick="mostrar('agregar1')">Agregar Autor</button>
+				<form action="/registrarautor" method="POST">
+					<div class="align-center form-floating"
+						style="width: 35%; display: none; margin: auto" id="agregar1">
+						<input type="text" class="form-control" id="nombreInput"
+							name="nombreInput" placeholder="nombre"> <label
+							for="nombreInput">Nombre</label>
+						<button class="btn btn-lg btn-primary" type="submit" id="finalagregar1">Agregar</button>
+						<button type="button" class="btn btn-secondary"
+							onclick="ocultar('agregar1')" style="display: inline">Ocultar</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 	<br>
 	<div>
-	<table class="table table-dark table-striped">
-		<thead>
-			<TR>
-				<TH COLSPAN="4"><BR>
-				<H3>EDITORIALES</H3></TH>
-			</TR>
-			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Nombre</th>
-				<th scope="col">Editar</th>
-				<th scope="col">Dar de baja/alta</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@mdo</td>
-			</tr>
-		</tbody>
-	</table>
+		<table class="table table-dark table-striped">
+			<thead>
+				<TR>
+					<TH COLSPAN="4"><BR>
+						<H3>EDITORIALES</H3></TH>
+				</TR>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Editar</th>
+					<th scope="col">Dar de baja/alta</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="editorial : ${editoriales}">
+					<td th:text="${editorial.id}"></td>
+					<td th:text="${editorial.nombre}"></td>
+					<td><button type="button" class="btn btn-primary">Editar</button></td>
+					<td th:switch="${editorial.alta}">
+						<button th:case="true" type="button" class="btn btn-success">Dar de alta</button>
+						<button th:case="false" type="button" class="btn btn-danger">Dar de baja</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>
+				<button type="button" class="btn btn-dark" onclick="mostrar('agregar2')">Agregar Editorial</button>
+				<form action="/registrareditorial" method="POST">
+					<div class="align-center form-floating" style="width: 35%; display: none; margin: auto" id="agregar2">
+						<input type="text" class="form-control" id="nombreInput" name="nombreInput" placeholder="nombre"> <label for="nombreInput">Nombre</label>
+						<button class="btn btn-lg btn-primary" type="submit" id="finalagregar2">Agregar</button>
+						<button type="button" class="btn btn-secondary" onclick="ocultar('agregar2')" style="display: inline">Ocultar</button>
+					</div>
+				</form>
+			</div>
 	</div>
 	<br>
 	<div>
-	<table class="table table-dark table-striped">
-		<thead>
-			<TR>
-				<TH COLSPAN="4"><BR>
-				<H3>LIBROS</H3></TH>
-			</TR>
-			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Titulo</th>
-				<th scope="col">Editar</th>
-				<th scope="col">Dar de baja/alta</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@mdo</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+		<table class="table table-dark table-striped">
+			<thead>
+				<TR>
+					<TH COLSPAN="4"><BR>
+						<H3>LIBROS</H3></TH>
+				</TR>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Titulo</th>
+					<th scope="col">Editar</th>
+					<th scope="col">Dar de baja/alta</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="libro : ${libros}">
+					<td th:text="${libro.id}"></td>
+					<td th:text="${libro.titulo}"></td>
+					<td><button type="button" class="btn btn-primary">Editar</button></td>
+					<td th:switch="${libro.alta}">
+						<button th:case="true" type="button" class="btn btn-success">Dar de alta</button>
+						<button th:case="false" type="button" class="btn btn-danger">Dar de baja</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>
+				<button type="button" class="btn btn-dark" onclick="mostrar('agregar3')">Agregar Libro</button>
+				<br>
+				<form action="/registrarlibro" method="POST">
+					<div class="align-center form-floating" style="display: none; margin: auto; text-align: center" id="agregar3">
+					<div style="width: 20%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputIsbn"name="inputIsbn" placeholder="isbn"> <label for="inputIsbn">Isbn</label>
+					</div>
+					<div style="width: 20%; display: inline-block; margin: auto">
+						<input type="text" class="form-control" id="inputTitulo"name="inputTitulo" placeholder="titulo"> <label for="inputTitulo">Titulo</label>
+					</div>
+					<div style="width: 10%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputAnio"name="inputAnio" placeholder="anio"> <label for="inputAnio">Año</label>
+					</div>
+					<div style="width: 10%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputEjemplares"name="inputEjemplares" placeholder="ejemplares"> <label for="inputEjemplares">Ejemplares</label>
+					</div>
+					<div style="width: 20%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputEjemplaresPrestados"name="inputEjemplaresPrestados" placeholder="ejemplaresPrestados"> <label for="inputEjemplaresPrestados">Ejemplares Prestados</label>
+					</div>
+					<div style="width: 20%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputEjemplaresRestantes"name="inputEjemplaresRestantes" placeholder="ejemplaresRestantes"> <label for="inputEjemplaresRestantes">Ejemplares Restantes</label>
+					</div>
+					<div style="width: 10%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputAutorId"name="inputAutorId" placeholder="autorId"> <label for="inputAutorId">Autor Id</label>
+					</div>
+					<div style="width: 10%; display: inline-block; margin: auto">
+						<input type="number" class="form-control" id="inputEditorialId"name="inputEditorialId" placeholder="editorialId"> <label for="inputEditorialId">Editorial Id</label>
+					</div>
+					<br>
+						<button class="btn btn-lg btn-primary" type="submit" id="finalagregar3">Agregar</button>
+						<button type="button" class="btn btn-secondary" onclick="ocultar('agregar3')" style="display: inline">Ocultar</button>
+					</div>
+				</form>
+			</div>
+	</div>
+	
 	<!-- JavaScript Bundle with Popper -->
+	<script type="text/javascript">
+		function mostrar(id) {
+			document.getElementById(id).style.display = 'block';
+			document.getElementById('final'.concat(id)).scrollIntoView(false);
+		}
+
+		function ocultar(id) {
+			document.getElementById(id).style.display = 'none';
+		}
+	</script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

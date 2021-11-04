@@ -18,8 +18,9 @@ public class AutorControlador {
 
 	@GetMapping(value = "/admin")
 	public String lista(Model model) {
-		model.addAttribute("list", autorRepo.findAll());
-		System.out.println(autorRepo.findAll().toString());
+		System.out.println("Buscando autores");
+		model.addAttribute("autores", autorRepo.findAll());
+		System.out.println("ya estaria");
 		return "admin.html";
 	}
 	
