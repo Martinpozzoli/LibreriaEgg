@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egg.web.libreria.entidades.Libro;
 import egg.web.libreria.errores.ErrorServicio;
@@ -68,17 +69,19 @@ public class LibroServicio {
 		
 	}
 	
+	@Transactional
 	public void darAltaBajaLibro(Integer id) throws ErrorServicio{
 			if(!libroRepo.findById(id).isPresent()) {
 				throw new ErrorServicio("No se encontró el libro con id = " + id);
 			}
 		if (libroRepo.findById(id).get().isAlta()) {
-			libroRepo.altabaja(false);
+			libroRepo.altabaja(false, id);
 		}else {
-			libroRepo.altabaja(true);
+			libroRepo.altabaja(true, id);
 		}
 	}
 	
+	@Transactional
 	public void quitarLibro(Integer id) throws ErrorServicio{
 		if(!libroRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el libro con id = " + id);
@@ -87,7 +90,6 @@ public class LibroServicio {
 	}
 	
 	public List<Libro> mostrarLibros() throws ErrorServicio{
-		
 		return libroRepo.listarLibros();
 	}
 	

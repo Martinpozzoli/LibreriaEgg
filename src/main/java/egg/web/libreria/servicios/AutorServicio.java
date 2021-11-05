@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egg.web.libreria.entidades.Autor;
 import egg.web.libreria.errores.ErrorServicio;
@@ -41,6 +42,7 @@ public class AutorServicio{
 		autorRepo.save(autor);
 	}
 	
+	@Transactional
 	public void darAltaBajaAutor(Integer id)  throws ErrorServicio{
 		
 		if(!autorRepo.findById(id).isPresent()) {
@@ -48,12 +50,13 @@ public class AutorServicio{
 		}
 		
 		if (autorRepo.findById(id).get().isAlta()) {
-			autorRepo.altabaja(false);
+			autorRepo.altabaja(false, id);
 		}else {
-			autorRepo.altabaja(true);
+			autorRepo.altabaja(true, id);
 		}
 	}
 	
+	@Transactional
 	public void quitarAutor(Integer id) throws ErrorServicio{
 		
 		if(!autorRepo.findById(id).isPresent()) {

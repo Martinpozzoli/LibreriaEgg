@@ -11,7 +11,7 @@ import egg.web.libreria.repositorios.AutorRepositorio;
 
 @Controller
 @RequestMapping("/admin")
-public class AutorControlador {
+public class AutorController {
 	
 	@Autowired
 	AutorRepositorio autorRepo;

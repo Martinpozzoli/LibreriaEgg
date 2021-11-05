@@ -3,6 +3,7 @@ package egg.web.libreria.repositorios;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,9 +24,11 @@ public interface AutorRepositorio extends JpaRepository<Autor,Integer>{
 	@Query("SELECT a FROM Autor a WHERE a.id =:id")
 	public Autor buscarAutorId(@Param("id") Integer id);
 
+	@Modifying
 	@Query("UPDATE Autor a SET a.alta =:alta WHERE a.id =:id")
-	public void altabaja(@Param("alta") boolean alta);
+	public void altabaja(@Param("alta") boolean alta, @Param("id") Integer id);
 	
+	@Modifying
 	@Query("DELETE Autor a WHERE a.id =:id")
 	public void eliminarAutor(@Param("id") Integer id);
 
