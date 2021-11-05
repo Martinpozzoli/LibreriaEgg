@@ -1,5 +1,5 @@
 package egg.web.libreria.controladores;
 
-public class EditorialControlador {
+public class EditorialController {
 
 }

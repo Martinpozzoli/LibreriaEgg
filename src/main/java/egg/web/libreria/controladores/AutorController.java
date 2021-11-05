@@ -11,15 +11,16 @@ import egg.web.libreria.repositorios.AutorRepositorio;
 
 @Controller
 @RequestMapping("/admin")
-public class AutorControlador {
+public class AutorController {
 	
 	@Autowired
 	AutorRepositorio autorRepo;
 
 	@GetMapping(value = "/admin")
 	public String lista(Model model) {
-		model.addAttribute("list", autorRepo.findAll());
-		System.out.println(autorRepo.findAll().toString());
+		System.out.println("Buscando autores");
+		model.addAttribute("autores", autorRepo.findAll());
+		System.out.println("ya estaria");
 		return "admin.html";
 	}
 	
