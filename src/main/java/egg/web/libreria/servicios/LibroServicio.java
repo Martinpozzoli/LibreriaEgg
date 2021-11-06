@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import egg.web.libreria.entidades.Foto;
 import egg.web.libreria.entidades.Libro;
 import egg.web.libreria.errores.ErrorServicio;
 import egg.web.libreria.repositorios.*;
@@ -21,8 +23,11 @@ public class LibroServicio {
 	
 	@Autowired
 	private EditorialRepositorio editorialRepo;
+	
+	@Autowired
+	private FotoServicio fotoServicio;
 
-	public void crearLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+	public void crearLibro(MultipartFile archivo, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
 			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio{
 		
 		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
@@ -39,11 +44,14 @@ public class LibroServicio {
 		libro.setAutor(autorRepo.buscarAutorId(autorId));
 		libro.setEditorial(editorialRepo.buscarEditorialId(editorialId));
 		
+		Foto foto = fotoServicio.guardar(archivo);
+		libro.setFoto(foto);
+		
 		libroRepo.save(libro);
 	}
 	
 	
-	public void modificarLibro(Integer id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+	public void modificarLibro(MultipartFile archivo, Integer id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
 			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio {
 		
 		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
@@ -64,6 +72,13 @@ public class LibroServicio {
 		libro.setAlta(true);
 		libro.setAutor(autorRepo.buscarAutorId(autorId));
 		libro.setEditorial(editorialRepo.buscarEditorialId(editorialId));
+		
+		Integer idFoto = null;
+		if(libro.getFoto() != null) {
+			idFoto = libro.getFoto().getId();
+		}
+		Foto foto = fotoServicio.actualizar(idFoto, archivo);
+		libro.setFoto(foto);
 		
 		libroRepo.save(libro);
 		

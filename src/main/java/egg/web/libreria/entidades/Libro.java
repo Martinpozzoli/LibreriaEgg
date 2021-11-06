@@ -20,7 +20,10 @@ public class Libro {
 	private Autor autor;
 	@ManyToOne
 	private Editorial editorial;
+	@OneToOne
+	private Foto foto;
 	
+
 	public Libro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
 			Integer ejemplaresRestantes, boolean alta, Autor autor, Editorial editorial) {
 		super();
@@ -119,6 +122,14 @@ public class Libro {
 		this.editorial = editorial;
 	}
 	
+
+	public Foto getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Foto foto) {
+		this.foto = foto;
+	}
 	
 	
 }

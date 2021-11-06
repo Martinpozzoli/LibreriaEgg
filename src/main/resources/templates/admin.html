@@ -211,7 +211,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<form action="/admin/editarlibro" method="POST">
+		<form action="/admin/editarlibro" method="POST" enctype="multipart/form-data">
 					<div class="align-center form-floating"
 						style="width: 35%; display: none; margin: auto" id="editar3">
 						<div style="display: inline-block; margin: auto">
@@ -250,6 +250,9 @@
 						<input type="number" class="form-control" id="eIdEditar3" name="inputEditorialId"> 
 							<label for="inputEditorialId">ID Editorial</label>
 						</div>
+						<div style="width: 50%; display: block; margin: auto">
+							<input type="file" class="form-control" id="inputFoto"name="inputFoto" placeholder="foto"> <label for="inputFoto">Portada</label>
+						</div>
 						<button class="btn btn-lg btn-primary" type="submit" id="finaleditar3">Editar</button>
 						<button type="button" class="btn btn-secondary"
 							onclick="ocultar('editar3')" style="display: inline">Ocultar</button>
@@ -258,7 +261,7 @@
 		<div>
 				<button type="button" class="btn btn-dark" onclick="mostrar('agregar3')">Agregar Libro</button>
 				<br>
-				<form action="/admin/registrarlibro" method="POST">
+				<form action="/admin/registrarlibro" method="POST" enctype="multipart/form-data">
 					<div class="align-center form-floating" style="display: none; margin: auto; text-align: center" id="agregar3">
 					<div style="width: 20%; display: inline-block; margin: auto">
 						<input type="number" class="form-control" id="inputIsbn"name="inputIsbn" placeholder="isbn"> <label for="inputIsbn">Isbn</label>
@@ -283,6 +286,9 @@
 					</div>
 					<div style="width: 10%; display: inline-block; margin: auto">
 						<input type="number" class="form-control" id="inputEditorialId"name="inputEditorialId" placeholder="editorialId"> <label for="inputEditorialId">Editorial Id</label>
+					</div>
+					<div style="width: 50%; display: block; margin: auto">
+						<input type="file" class="form-control" id="inputFoto"name="inputFoto" placeholder="foto"> <label for="inputFoto">Portada</label>
 					</div>
 					<br>
 						<button class="btn btn-lg btn-primary" type="submit" id="finalagregar3">Agregar</button>

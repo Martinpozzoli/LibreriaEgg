@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import egg.web.libreria.errores.ErrorServicio;
 import egg.web.libreria.servicios.AutorServicio;
@@ -83,6 +84,7 @@ public class AdminController {
 
 	@PostMapping("/registrarlibro")
 	public String registrarLibro(ModelMap modelo, 
+								@RequestParam @Nullable MultipartFile inputFoto,
 								@RequestParam @Nullable Long inputIsbn,
 								@RequestParam @Nullable String inputTitulo, 
 								@RequestParam @Nullable Integer inputAnio,
@@ -92,7 +94,7 @@ public class AdminController {
 								@RequestParam @Nullable Integer inputAutorId,
 								@RequestParam @Nullable Integer inputEditorialId) {
 		try {
-			libroServicio.crearLibro(inputIsbn, inputTitulo, inputAnio, inputEjemplares, inputEjemplaresPrestados,
+			libroServicio.crearLibro(inputFoto, inputIsbn, inputTitulo, inputAnio, inputEjemplares, inputEjemplaresPrestados,
 					inputEjemplaresRestantes, inputAutorId, inputEditorialId);
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
@@ -144,7 +146,8 @@ public class AdminController {
 	}
 
 	@PostMapping("/editarlibro")
-	public String editarLibro(ModelMap modelo, 
+	public String editarLibro(ModelMap modelo,
+								@RequestParam @Nullable MultipartFile inputFoto,
 								@RequestParam Integer inputId,
 								@RequestParam @Nullable Long inputIsbn,
 								@RequestParam @Nullable String inputTitulo, 
@@ -155,7 +158,7 @@ public class AdminController {
 								@RequestParam @Nullable Integer inputAutorId,
 								@RequestParam @Nullable Integer inputEditorialId) {
 		try {
-			libroServicio.modificarLibro(inputId, inputIsbn, inputTitulo, inputAnio, inputEjemplares, inputEjemplaresPrestados,
+			libroServicio.modificarLibro(inputFoto, inputId, inputIsbn, inputTitulo, inputAnio, inputEjemplares, inputEjemplaresPrestados,
 					inputEjemplaresRestantes, inputAutorId, inputEditorialId);
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
