@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Autor {
 	@Id
 	@Column(name="autor_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String nombre;
 	private boolean alta;

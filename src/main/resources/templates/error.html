@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERROR</title>
+
+<!-- CSS only -->
+<link href="css/bootstrap.min.css" rel="stylesheet"
+	th:ref="@{/css/bootstrap.css}">
+
+</head>
+<body class="text-center">
+	
+	<nav th:replace="fragments/navbar.html :: nav"></nav>
+	
+	<br>
+	<br>
+	<br>
+	<h1 class="masthead-heading mb-8" th:text="${'ERROR ' + codigo}"></h1>
+	<h3 class="masthead-subheading mb-8" th:text="${mensaje == null ? 'Intente nuevamente' : mensaje}"></h3>
+	<a href="javascript:history.back()" class="btn btn-primary btn-xl rounded-pill mt-5">Volver Atrás</a>
+	
+	<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ package egg.web.libreria.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -32,6 +33,7 @@ public class AdminController {
 
 	//SE LLENAN LAS TABLAS-------------------------------------
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(value = "")
 	public String admin(Model model) {
 		try {
@@ -56,6 +58,7 @@ public class AdminController {
 	
 	// Registros--------------------------
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/registrarautor")
 	public String registrarAutor(ModelMap modelo, @RequestParam @Nullable String nombreInput) {
 		try {
@@ -64,11 +67,12 @@ public class AdminController {
 			modelo.put("error", e.getMessage());
 			modelo.put("nombre", nombreInput);
 			System.out.println("Error al registrar autor" + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/registrareditorial")
 	public String registrarEditorial(ModelMap modelo, @RequestParam @Nullable String nombreInput) {
 		try {
@@ -77,25 +81,26 @@ public class AdminController {
 			modelo.put("error", e.getMessage());
 			modelo.put("nombre", nombreInput);
 			System.out.println("Error al registrar editorial" + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/registrarlibro")
 	public String registrarLibro(ModelMap modelo, 
-								@RequestParam @Nullable MultipartFile inputFoto,
+								@RequestParam(value = "inputFoto", required = false) MultipartFile inputFoto,
 								@RequestParam @Nullable Long inputIsbn,
 								@RequestParam @Nullable String inputTitulo, 
 								@RequestParam @Nullable Integer inputAnio,
 								@RequestParam @Nullable Integer inputEjemplares, 
 								@RequestParam @Nullable Integer inputEjemplaresPrestados,
-								@RequestParam @Nullable Integer inputEjemplaresRestantes, 
 								@RequestParam @Nullable Integer inputAutorId,
-								@RequestParam @Nullable Integer inputEditorialId) {
+								@RequestParam @Nullable Integer inputEditorialId,
+								@RequestParam @Nullable String inputSinopsis) {
 		try {
 			libroServicio.crearLibro(inputFoto, inputIsbn, inputTitulo, inputAnio, inputEjemplares, inputEjemplaresPrestados,
-					inputEjemplaresRestantes, inputAutorId, inputEditorialId);
+					inputAutorId, inputEditorialId, inputSinopsis);
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
 			modelo.put("isbn", inputIsbn);
@@ -103,17 +108,18 @@ public class AdminController {
 			modelo.put("anio", inputAnio);
 			modelo.put("ejemplares", inputEjemplares);
 			modelo.put("ejemplaresPrestados", inputEjemplaresPrestados);
-			modelo.put("ejemplaresRestantes", inputEjemplaresRestantes);
 			modelo.put("autorId", inputAutorId);
 			modelo.put("editorialId", inputEditorialId);
+			modelo.put("sinopsis", inputSinopsis);
 			System.out.println("Error al registrar libro" + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 
 	// Ediciones------------------------------------
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/editarautor")
 	public String editarAutor(ModelMap modelo, @RequestParam @Nullable Integer idInput,
 			@RequestParam String nombreInput) {
@@ -124,11 +130,12 @@ public class AdminController {
 			modelo.put("id", idInput);
 			modelo.put("nombre", nombreInput);
 			System.out.println("Error al modificar autor" + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/editareditorial")
 	public String editarEditorial(ModelMap modelo, 
 									@RequestParam @Nullable Integer idInput,
@@ -140,11 +147,12 @@ public class AdminController {
 			modelo.put("id", idInput);
 			modelo.put("nombre", nombreInput);
 			System.out.println("Error al modificar editorial" + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/editarlibro")
 	public String editarLibro(ModelMap modelo,
 								@RequestParam @Nullable MultipartFile inputFoto,
@@ -154,12 +162,12 @@ public class AdminController {
 								@RequestParam @Nullable Integer inputAnio,
 								@RequestParam @Nullable Integer inputEjemplares, 
 								@RequestParam @Nullable Integer inputEjemplaresPrestados,
-								@RequestParam @Nullable Integer inputEjemplaresRestantes, 
 								@RequestParam @Nullable Integer inputAutorId,
-								@RequestParam @Nullable Integer inputEditorialId) {
+								@RequestParam @Nullable Integer inputEditorialId,
+								@RequestParam @Nullable String inputSinopsis) {
 		try {
 			libroServicio.modificarLibro(inputFoto, inputId, inputIsbn, inputTitulo, inputAnio, inputEjemplares, inputEjemplaresPrestados,
-					inputEjemplaresRestantes, inputAutorId, inputEditorialId);
+					inputAutorId, inputEditorialId, inputSinopsis);
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
 			modelo.put("id", inputId);
@@ -168,31 +176,33 @@ public class AdminController {
 			modelo.put("anio", inputAnio);
 			modelo.put("ejemplares", inputEjemplares);
 			modelo.put("ejemplaresPrestados", inputEjemplaresPrestados);
-			modelo.put("ejemplaresRestantes", inputEjemplaresRestantes);
 			modelo.put("autorId", inputAutorId);
 			modelo.put("editorialId", inputEditorialId);
+			modelo.put("sinopsis", inputSinopsis);
+			
 			System.out.println("Error al modificar autor" + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 	
 	//ALTA Y BAJA--------------------------------------------
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/alta-baja-autor/{id}")
 	public String altaBajaA(ModelMap modelo,
 							@PathVariable("id") Integer id) {
-		System.out.println(id);
 		try {
 			autorServicio.darAltaBajaAutor(id);
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
 			System.out.println("Error al dar de alta/baja " + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/alta-baja-editorial/{id}")
 	public String altaBajaE(ModelMap modelo, 
 							@PathVariable("id") Integer id) {
@@ -201,11 +211,12 @@ public class AdminController {
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
 			System.out.println("Error al dar de alta/baja " + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/alta-baja-libro/{id}")
 	public String altaBajaL(ModelMap modelo, 
 							@PathVariable("id") Integer id) {
@@ -214,8 +225,8 @@ public class AdminController {
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
 			System.out.println("Error al dar de alta/baja " + e.getMessage());
-			return "../static/registrar.html";
+			return "redirect:/admin";
 		}
-		return "../static/registrar.html";
+		return "redirect:/admin";
 	}
 }

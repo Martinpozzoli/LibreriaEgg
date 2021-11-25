@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Libreria EGG</title>
+
+
+	<!-- CSS only -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/sidebar.css" rel="stylesheet">
+	<link href="/css/detalles.css" rel="stylesheet">
+
+ 	<style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+ 
+<body class="grid-container">
+
+	<!-- Navbar -->
+	<nav th:replace="fragments/navbar.html :: nav"></nav>
+
+	<!-- Sidebar -->
+	<nav th:replace="fragments/sidebar.html :: nav"></nav>
+
+<!-- MAIN -->
+<main class="main main-grid-container">
+	<div class="encabezado">
+		<h1>DETALLES</h1>
+	</div>
+	<div class="contenedor-detalles" >
+		<div class="info-container">
+			<h5 th:text="${'ID: ' + libro.id}"></h5>
+			<h3 th:text="${libro.titulo}"></h3>
+			<h6 th:text="${'Autor: ' + libro.autor.nombre}"></h6>
+			<h6 th:text="${'Editorial: ' + libro.editorial.nombre}"></h6>
+			<h5 th:text="${'Disponibles: ' + libro.ejemplaresRestantes}"></h5>
+		</div>
+		<img th:src="${'/libro/portada/' + libro.id}" style="width: 250px; height: 250px;" class="portada-container">
+		<div class="resumen-container">
+			<h5>¿De qué trata?</h5>
+			<p th:if="${libro.sinopsis != null}" th:text="${libro.sinopsis}"></p>
+			<p th:if="${libro.sinopsis == null}">(Sin información)</p>
+		</div>
+			<a th:if="${error == null}" th:href="@{/prestamo/pedir/__${libro.id}__/__${session.usersession.id}__}" 
+				class="btn btn-success boton-pedir-devolver">Pedir</a>
+			<p th:if="${error != null}" th:text="${error}" style="color:red; display: block;" class="alerta"></p> 
+	</div>
+</main>
+
+    <!-- JavaScript Bundle with Popper -->
+<script src="js/bootstrap.bundle.min.js"></script>
+      
+  </body>
+</html>

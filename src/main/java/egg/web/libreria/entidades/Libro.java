@@ -7,11 +7,12 @@ import javax.persistence.*;
 public class Libro {
 	@Id
 	@Column(name="libro_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private Long isbn;
 	private String titulo;
 	private Integer anio;
+	private String sinopsis;
 	private Integer ejemplares;
 	private Integer ejemplaresPrestados;
 	private Integer ejemplaresRestantes;
@@ -25,7 +26,7 @@ public class Libro {
 	
 
 	public Libro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, boolean alta, Autor autor, Editorial editorial) {
+			Integer ejemplaresRestantes, boolean alta, Autor autor, Editorial editorial, String sinopsis) {
 		super();
 		this.isbn = isbn;
 		this.titulo = titulo;
@@ -36,6 +37,7 @@ public class Libro {
 		this.alta = alta;
 		this.autor = autor;
 		this.editorial = editorial;
+		this.sinopsis = sinopsis;
 	}
 
 	public Libro() {
@@ -94,8 +96,8 @@ public class Libro {
 		return ejemplaresRestantes;
 	}
 
-	public void setEjemplaresRestantes(Integer ejemplaresRestantes) {
-		this.ejemplaresRestantes = ejemplaresRestantes;
+	public void setEjemplaresRestantes() {
+		this.ejemplaresRestantes = ejemplares - ejemplaresPrestados;
 	}
 
 	public boolean isAlta() {
@@ -129,6 +131,14 @@ public class Libro {
 
 	public void setFoto(Foto foto) {
 		this.foto = foto;
+	}
+
+	public String getSinopsis() {
+		return sinopsis;
+	}
+
+	public void setSinopsis(String sinopsis) {
+		this.sinopsis = sinopsis;
 	}
 	
 	

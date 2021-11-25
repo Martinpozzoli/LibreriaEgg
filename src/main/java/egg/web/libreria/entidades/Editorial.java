@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Editorial {
 	@Id
 	@Column(name="editorial_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
 	private boolean alta;

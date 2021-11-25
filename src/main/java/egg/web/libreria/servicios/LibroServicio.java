@@ -1,6 +1,7 @@
 package egg.web.libreria.servicios;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,9 @@ public class LibroServicio {
 	private FotoServicio fotoServicio;
 
 	public void crearLibro(MultipartFile archivo, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio{
+			Integer autorId, Integer editorialId, String sinopsis) throws ErrorServicio{
 		
-		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
-				ejemplaresRestantes, autorId, editorialId);
+		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados, autorId, editorialId);
 		
 		Libro libro = new Libro();
 		libro.setIsbn(isbn);
@@ -39,23 +39,25 @@ public class LibroServicio {
 		libro.setAnio(anio);
 		libro.setEjemplares(ejemplares);
 		libro.setEjemplaresPrestados(ejemplaresPrestados);
-		libro.setEjemplaresRestantes(ejemplaresRestantes);
+		libro.setEjemplaresRestantes();
 		libro.setAlta(true);
 		libro.setAutor(autorRepo.buscarAutorId(autorId));
 		libro.setEditorial(editorialRepo.buscarEditorialId(editorialId));
-		
+		libro.setSinopsis(sinopsis);
+
 		Foto foto = fotoServicio.guardar(archivo);
 		libro.setFoto(foto);
+		
 		
 		libroRepo.save(libro);
 	}
 	
 	
 	public void modificarLibro(MultipartFile archivo, Integer id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio {
+			Integer autorId, Integer editorialId, String sinopsis) throws ErrorServicio {
 		
 		validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,
-				ejemplaresRestantes, autorId, editorialId);
+				autorId, editorialId);
 		
 		if(!libroRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el libro con id = " + id);
@@ -68,17 +70,20 @@ public class LibroServicio {
 		libro.setAnio(anio);
 		libro.setEjemplares(ejemplares);
 		libro.setEjemplaresPrestados(ejemplaresPrestados);
-		libro.setEjemplaresRestantes(ejemplaresRestantes);
+		libro.setEjemplaresRestantes();
 		libro.setAlta(true);
 		libro.setAutor(autorRepo.buscarAutorId(autorId));
 		libro.setEditorial(editorialRepo.buscarEditorialId(editorialId));
+		libro.setSinopsis(sinopsis);
 		
 		Integer idFoto = null;
 		if(libro.getFoto() != null) {
 			idFoto = libro.getFoto().getId();
 		}
-		Foto foto = fotoServicio.actualizar(idFoto, archivo);
-		libro.setFoto(foto);
+		if(archivo.getSize() > 0) {
+			Foto foto = fotoServicio.actualizar(idFoto, archivo);
+			libro.setFoto(foto);
+		}
 		
 		libroRepo.save(libro);
 		
@@ -97,6 +102,30 @@ public class LibroServicio {
 	}
 	
 	@Transactional
+	public void prestarLibro(Integer id) throws ErrorServicio{
+		try{
+			Libro l = buscarPorId(id).get();
+			l.setEjemplaresPrestados(l.getEjemplaresPrestados() + 1);
+			l.setEjemplaresRestantes();
+			libroRepo.save(l);
+		}catch(Exception e) {
+			throw new ErrorServicio("No se encontró el libro con id = " + id);
+		}
+	}
+	
+	@Transactional
+	public void returnLibro(Integer id) throws ErrorServicio{
+		try{
+			Libro l = buscarPorId(id).get();
+			l.setEjemplaresPrestados(l.getEjemplaresPrestados() - 1);
+			l.setEjemplaresRestantes();
+			libroRepo.save(l);
+		}catch(Exception e) {
+			throw new ErrorServicio("No se encontró el libro con id = " + id);
+		}
+	}
+	
+	@Transactional
 	public void quitarLibro(Integer id) throws ErrorServicio{
 		if(!libroRepo.findById(id).isPresent()) {
 			throw new ErrorServicio("No se encontró el libro con id = " + id);
@@ -108,8 +137,24 @@ public class LibroServicio {
 		return libroRepo.listarLibros();
 	}
 	
+	public Optional<Libro> buscarPorId(Integer id) {
+		return libroRepo.findById(id);
+	}
+	
+	public List<Libro> buscarPorTitulo(String busqueda) throws ErrorServicio{
+		return libroRepo.listarLibrosTitulo(busqueda);
+	}
+	
+	public List<Libro> buscarPorAutor(String busqueda) throws ErrorServicio{
+		return libroRepo.listarLibrosAutor(busqueda);
+	}
+	
+	public List<Libro> buscarPorEditorial(String busqueda) throws ErrorServicio{
+		return libroRepo.listarLibrosEditorial(busqueda);
+	}
+	
 	private void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-			Integer ejemplaresRestantes, Integer autorId, Integer editorialId) throws ErrorServicio{
+			Integer autorId, Integer editorialId) throws ErrorServicio{
 		
 		if (isbn == null || isbn.toString().isEmpty()) {
 			throw new ErrorServicio("isbn sin especificar");
@@ -129,10 +174,6 @@ public class LibroServicio {
 		
 		if (ejemplaresPrestados == null || ejemplaresPrestados.toString().isEmpty()) {
 			throw new ErrorServicio("N° de ejemplares prestados sin especificar");
-		}
-		
-		if (ejemplaresRestantes == null || ejemplaresRestantes.toString().isEmpty()) {
-			throw new ErrorServicio("N° de ejemplares restantes sin especificar");
 		}
 		
 		if (autorId == null || autorId.toString().isEmpty()) {

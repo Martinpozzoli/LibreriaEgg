@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Registro</title>
@@ -9,82 +9,47 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/"><strong>LaLibreria</strong></a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-					aria-controls="navbarCollapse" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<ul class="navbar-nav me-auto mb-2 mb-md-0">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/">Inicio</a></li>
-						<li class="nav-item"><a class="nav-link active" href="/login">Login</a>
-						</li>
-						<li class="nav-item"><a class="nav-link active"
-							href="/registro">Registrarme</a></li>
-						<li class="nav-item"><a class="nav-link active" href="/admin">Administrar
-								BD</a></li>
-					</ul>
-					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
-				</div>
-			</div>
-		</nav>
-	</header>
+
+	<nav th:replace="fragments/navbar.html :: nav"></nav>
+	
 	<br>
 	<br>
 	<br>
-	<form class="row g-3">
+	<h2 class="dysplay-4">Registro</h2>
+	<form action="/registrar" method="POST" class="row g-3" >
+		
+		<p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+		
 		<div class="col-md-6">
-			<label for="inputEmail4" class="form-label">Email</label> <input
-				type="email" class="form-control" id="inputEmail4">
-		</div>
-		<div class="col-md-6">
-			<label for="inputPassword4" class="form-label">Password</label> <input
-				type="password" class="form-control" id="inputPassword4">
-		</div>
-		<div class="col-12">
-			<label for="inputAddress" class="form-label">Address</label> <input
-				type="text" class="form-control" id="inputAddress"
-				placeholder="1234 Main St">
-		</div>
-		<div class="col-12">
-			<label for="inputAddress2" class="form-label">Address 2</label> <input
-				type="text" class="form-control" id="inputAddress2"
-				placeholder="Apartment, studio, or floor">
+			<label for="inputDocumento" class="form-label">Documento</label> 
+			<input type="number" class="form-control" id="inputDocumento" name="inputDocumento" th:value="${documento}">
 		</div>
 		<div class="col-md-6">
-			<label for="inputCity" class="form-label">City</label> <input
-				type="text" class="form-control" id="inputCity">
+			<label for="inputEmail" class="form-label">Email</label> 
+			<input type="email" class="form-control" id="inputEmail" name="inputEmail" th:value="${email}">
 		</div>
-		<div class="col-md-4">
-			<label for="inputState" class="form-label">State</label> <select
-				id="inputState" class="form-select">
-				<option selected>Choose...</option>
-				<option>...</option>
-			</select>
+		<div class="col-md-6">
+			<label for="inputNombre" class="form-label">Nombre</label> 
+			<input type="text" class="form-control" id="inputNombre" name="inputNombre" th:value="${nombre}">
 		</div>
-		<div class="col-md-2">
-			<label for="inputZip" class="form-label">Zip</label> <input
-				type="text" class="form-control" id="inputZip">
+		<div class="col-md-6">
+			<label for="inputApellido" class="form-label">Apellido</label> 
+			<input type="text" class="form-control" id="inputApellido" name="inputApellido" th:value="${apellido}">
+		</div>
+		<div class="col-md-6">
+			<label for="inputTelefono" class="form-label">Telefono</label> 
+			<input type="text" class="form-control" id="inputTelefono" name="inputTelefono" th:value="${telefono}">
+		</div>
+		<div class="col-md-6">
+			<label for="inputPassword1" class="form-label">Contraseña</label> 
+			<input type="password" class="form-control" id="inputPassword1" name="inputPassword1" th:value="${pass1}">
+		</div>
+		<div class="col-md-6">
+			<label for="inputPassword2" class="form-label">Repetir Contraseña</label> 
+			<input type="password" class="form-control" id="inputPassword2" name="inputPassword2" th:value="${pass2}">
 		</div>
 		<div class="col-12">
-			<div class="form-check">
-				<input class="form-check-input" type="checkbox" id="gridCheck">
-				<label class="form-check-label" for="gridCheck"> Check me
-					out </label>
-			</div>
-		</div>
-		<div class="col-12">
-			<button type="submit" class="btn btn-primary">Sign in</button>
+			<button type="submit" class="btn btn-primary">Registrarme</button>
 		</div>
 	</form>
 	<!-- JavaScript Bundle with Popper -->

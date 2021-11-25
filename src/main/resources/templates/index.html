@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
@@ -31,39 +31,10 @@
     
     <!-- Custom styles for this template -->
     <link href="css/carousel.css" rel="stylesheet">
-  </head>
-  <body>
-    
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/"><strong>LaLibreria</strong></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/registro">Registrarme</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/admin">Administrar BD</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-</header>
+	</head>
+<body>
+   
+	<nav th:replace="fragments/navbar.html :: nav"></nav>
 
 <main>
 
@@ -75,19 +46,17 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
+		<img alt="fotasa" src="/img/car1.jpeg" class="d-block w-100">
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
+            <h1>Bienvenido</h1>
             <p>Some representative placeholder content for the first slide of the carousel.</p>
             <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
+        <img alt="fotasa" src="/img/car2.jpg" class="d-block w-100">
         <div class="container">
           <div class="carousel-caption">
             <h1>Another example headline.</h1>
@@ -97,8 +66,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
+        <img alt="fotasa" src="/img/car3.jpg" class="d-block w-100">
         <div class="container">
           <div class="carousel-caption text-end">
             <h1>One more for good measure.</h1>
@@ -122,7 +90,6 @@
   <!-- Marketing messaging and featurettes
   ================================================== -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
-
   <div class="container marketing">
 
     <!-- Three columns of text below the carousel -->
