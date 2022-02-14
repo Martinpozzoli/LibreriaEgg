@@ -1,6 +1,6 @@
 # LibreriaEgg (Proyecto final del cursado)
 ##  ¿De qué se trata?
-        La idea de esta apliación es armar un sistema completo de gestión en el cual un usuario 
+        La idea de esta aplicación es armar un sistema completo de gestión en el cual un usuario 
         con el rol USER pueda gestionar sus prestamos de libros y un ADMIN que pueda gestionar 
         los libros disponibles, autores y editoriales.
         
